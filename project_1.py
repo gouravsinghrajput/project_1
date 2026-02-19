@@ -3,5 +3,5 @@ import cv2 as cv
 import mediapipe as mp 
 import numpy as np 
 import math 
-import pygame 
+import pygame as py
 #------------------------------------------------
