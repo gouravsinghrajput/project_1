@@ -8,5 +8,5 @@ A simple program in python which uses, opencv and mediapipe, (maybe other techno
 
 
 
-# understood the concept for writing the logic for fingers up, will improve it
-# next task: to add the rectangles and a proper nice looking screen design to show all the respective actions performed.. 
+understood the concept for writing the logic for fingers up, will improve it
+next task: to add the rectangles and a proper nice looking screen design to show all the respective actions performed.. 
