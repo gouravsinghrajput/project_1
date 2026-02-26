@@ -18,6 +18,16 @@ if not cap.isOpened():
 # cv.resizeWindow('frame', 1000, 900)
 #----------------------------------------------------------------------------------
 
+#-----------for hands------------------------
+mp_hands = mp.solutions.hands 
+mp_draw = mp.solutions.drawing_utils
+hands = mp_hands.Hands(
+    max_num_hands = 4,
+    min_detection_confidence = 0.7, 
+    min_tracking_confidence = 0.6
+)
+#-------------------------------------------
+ 
 
 while True:
     ret, frame = cap.read()
