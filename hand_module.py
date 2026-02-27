@@ -19,6 +19,12 @@ hands = mp_hands.Hands(
     min_tracking_confidence = 0.6
 )
 
+#---------- canvas for the drawing part -------------
+canvas = np.zeros((500, 700, 3), dtype = np.uint8)
+x_old, y_old = 0, 0
+#----------------------------------------------------
+
+
 while True:
     ret, frame = cap.read()
     if not ret:
@@ -92,9 +98,27 @@ while True:
                 ((cy > landmark_list[20][1][1]))):
                     cv.putText(frame, "Pinky Finger is up", (10, 30), cv.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
             #-----------------------------------------------
-                                            
 
 
+    # ------ for the actual drawing part on other screen ------------
+    if landmark_list:
+        (x, y) = landmark_list[8][1]
+
+        if ((landmark_list[8][1][1] < landmark_list[5][1][1]) and
+                ((landmark_list[8][1][1] < landmark_list[12][1][1])) and 
+                ((landmark_list[8][1][1] < landmark_list[16][1][1])) and 
+                ((landmark_list[8][1][1] < landmark_list[20][1][1]))):
+            if x_old == 0 and y_old == 0:
+                x_old, y_old = x, y
+
+            cv.line(canvas, (x_old, y_old), (x, y), (0, 255, 0), 4) 
+            x_old, y_old = x, y
+        else:
+             x_old, y_old = 0, 0    
+    #-----------------------------------------------------------------
+
+
+    cv.imshow('canvas', canvas)
     # color = cv.cvtColor(frame, cv.COLOR_BGR2BGR555)
     cv.imshow('frame', frame)
 
