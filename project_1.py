@@ -27,10 +27,19 @@ hands = mp_hands.Hands(
     min_tracking_confidence = 0.6
 )
 #-------------------------------------------
+    
+ 
+
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        print("cannot collect the frame, exiting the program")
+        break
+    frame = cv.flip(frame, 1)
+    frame = cv.resize(frame, (700, 500)) 
 
 
-#----------- function for fingers ----------------
-def fingers_detecton():
+    #----------- logic for fingers -------------------------
     results = hands.process(frame)
 
     if results.multi_hand_landmarks:
@@ -96,15 +105,8 @@ def fingers_detecton():
                 ((cy > landmark_list[20][1][1]))):
                     cv.putText(frame, "Pinky Finger is up", (10, 30), cv.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
             #-----------------------------------------------
- 
 
-while True:
-    ret, frame = cap.read()
-    if not ret:
-        print("cannot collect the frame, exiting the program")
-        break
-    frame = cv.flip(frame, 1)
-    frame = cv.resize(frame, (700, 500)) 
+
     # color = cv.cvtColor(frame, cv.COLOR_BGR2GRAY) # for Grayscale video
     cv.imshow('frame', frame)
 
