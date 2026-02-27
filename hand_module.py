@@ -111,14 +111,26 @@ while True:
             if x_old == 0 and y_old == 0:
                 x_old, y_old = x, y
 
-            cv.line(canvas, (x_old, y_old), (x, y), (0, 255, 0), 4) 
+            cv.line(canvas, (x_old, y_old), (x, y), (0, 0, 255), 4) 
             x_old, y_old = x, y
         else:
              x_old, y_old = 0, 0    
     #-----------------------------------------------------------------
 
 
-    cv.imshow('canvas', canvas)
+    #-------merging the canvas and the original frame together -------------
+    # frame = cv.add(frame, canvas)   # not optimal, but works
+    gray = cv.cvtColor(canvas, cv.COLOR_BGR2GRAY)
+    _, inv_canvas = cv.threshold(gray, 50, 255, cv.THRESH_BINARY_INV)
+    inv_canvas = cv.cvtColor(inv_canvas, cv.COLOR_GRAY2BGR)
+
+
+    frame = cv.bitwise_and(frame, inv_canvas)
+    frame = cv.bitwise_or(frame, canvas)
+    #-----------------------------------------------------------------------
+
+
+    # cv.imshow('canvas', canvas)   # as now both the windows are merged, we don't need to show the canvas seperatly.
     # color = cv.cvtColor(frame, cv.COLOR_BGR2BGR555)
     cv.imshow('frame', frame)
 
