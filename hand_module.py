@@ -82,7 +82,17 @@ while True:
             #-----------------------------------------------
 
 
-                    
+            #----------- for pinky finger -------------------
+            if landmark_list:
+                landmark_id, (cx, cy) = landmark_list[18]
+                # cv.putText(frame, f'({cx}, {cy})', (cx, cy + 20), cv.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 1)
+            if ((cy < landmark_list[8][1][1]) and
+                ((cy < landmark_list[12][1][1])) and 
+                ((cy < landmark_list[16][1][1])) and  
+                ((cy > landmark_list[20][1][1]))):
+                    cv.putText(frame, "Pinky Finger is up", (10, 30), cv.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+            #-----------------------------------------------
+                                            
 
 
     # color = cv.cvtColor(frame, cv.COLOR_BGR2BGR555)
