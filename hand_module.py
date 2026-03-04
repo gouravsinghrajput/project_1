@@ -33,7 +33,8 @@ while True:
     frame = cv.flip(frame, 1)
     frame = cv.resize(frame, (700, 500))
 
-    results = hands.process(frame)
+    landmark_list = []
+    results = hands.process(cv.cvtColor(frame, cv.COLOR_BGR2RGB))
 
     if results.multi_hand_landmarks:
         for hand_landmarks in results.multi_hand_landmarks:
@@ -103,6 +104,7 @@ while True:
     # ------ for the actual drawing part on other screen ------------
     if landmark_list:
         (x, y) = landmark_list[8][1]
+        (p, q) = landmark_list[12][1]
 
         if ((landmark_list[8][1][1] < landmark_list[5][1][1]) and
                 ((landmark_list[8][1][1] < landmark_list[12][1][1])) and 
@@ -114,25 +116,48 @@ while True:
             cv.line(canvas, (x_old, y_old), (x, y), (0, 0, 255), 4) 
             x_old, y_old = x, y
         else:
-             x_old, y_old = 0, 0    
+             x_old, y_old = 0, 0  
+
+
+        if (landmark_list[8][1][1]   >  landmark_list[5][1][1] and 
+            landmark_list[12][1][1]  > landmark_list[5][1][1] and
+            landmark_list[16][1][1]  > landmark_list[5][1][1] and 
+            landmark_list[20][1][1]  > landmark_list[5][1][1]):
+            cv.circle(canvas, (p, q), 50, (0, 0, 0), -1)  
     #-----------------------------------------------------------------
 
 
     #-------merging the canvas and the original frame together -------------
     # frame = cv.add(frame, canvas)   # not optimal, but works
-    gray = cv.cvtColor(canvas, cv.COLOR_BGR2GRAY)
-    _, inv_canvas = cv.threshold(gray, 50, 255, cv.THRESH_BINARY_INV)
-    inv_canvas = cv.cvtColor(inv_canvas, cv.COLOR_GRAY2BGR)
+    # gray = cv.cvtColor(canvas, cv.COLOR_BGR2GRAY)
+    # _, inv_canvas = cv.threshold(gray, 50, 255, cv.THRESH_BINARY_INV)
+    # inv_canvas = cv.cvtColor(inv_canvas, cv.COLOR_GRAY2BGR)
 
 
-    frame = cv.bitwise_and(frame, inv_canvas)
-    frame = cv.bitwise_or(frame, canvas)
+    # frame = cv.bitwise_and(frame, inv_canvas)
+    # frame = cv.bitwise_or(frame, canvas)
     #-----------------------------------------------------------------------
 
 
     # cv.imshow('canvas', canvas)   # as now both the windows are merged, we don't need to show the canvas seperatly.
     # color = cv.cvtColor(frame, cv.COLOR_BGR2BGR555)
+
+# ---------- HOVER DISPLAY ----------
+    canvas_display = canvas.copy()
+
+    if landmark_list:
+        index_tip = landmark_list[8][1]
+        middle_tip = landmark_list[12][1]
+
+        cv.circle(canvas_display, index_tip, 2, (0, 255, 0), -1)   
+        cv.circle(canvas_display, middle_tip, 4, (255, 0, 0), -1)  
+        cv.circle(canvas_display, middle_tip, 50, (255, 255, 255), 1)  
+        
+
     cv.imshow('frame', frame)
+    cv.imshow('canvas', canvas_display)
+
+    
 
     k = cv.waitKey(1)
     if k == ord("q"):
