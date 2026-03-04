@@ -91,7 +91,7 @@ while True:
                     ((cy < landmark_list[12][1][1])) and 
                     ((cy < landmark_list[16][1][1])) and 
                     ((cy < landmark_list[20][1][1]))):
-                        cv.putText(frame, "Index Finger is up", (10, 30), cv.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2) 
+                        cv.putText(frame, "Index Finger is up", (10, 130), cv.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2) 
             
             
             
@@ -103,7 +103,7 @@ while True:
                 ((cy < landmark_list[11][1][1])) and 
                 ((cy < landmark_list[16][1][1])) and 
                 ((cy < landmark_list[20][1][1]))):
-                    cv.putText(frame, "Middle Finger is up", (10, 30), cv.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2) 
+                    cv.putText(frame, "Middle Finger is up", (10, 130), cv.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2) 
 
 
 
@@ -115,7 +115,7 @@ while True:
                 ((cy < landmark_list[12][1][1])) and   
                 ((cy > landmark_list[16][1][1])) and 
                 ((cy < landmark_list[20][1][1]))):
-                    cv.putText(frame, "Ring Finger is up", (10, 30), cv.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+                    cv.putText(frame, "Ring Finger is up", (10, 130), cv.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
 
             if landmark_list:
@@ -125,7 +125,7 @@ while True:
                 ((cy < landmark_list[12][1][1])) and 
                 ((cy < landmark_list[16][1][1])) and  
                 ((cy > landmark_list[20][1][1]))):
-                    cv.putText(frame, "Pinky Finger is up", (10, 30), cv.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+                    cv.putText(frame, "Pinky Finger is up", (10, 130), cv.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
     
     if landmark_list:
         (x, y) = landmark_list[8][1]
@@ -133,9 +133,9 @@ while True:
 
 
         if ((landmark_list[8][1][1] < landmark_list[5][1][1]) and
-                    ((landmark_list[8][1][1] < landmark_list[12][1][1])) and 
-                    ((landmark_list[8][1][1] < landmark_list[16][1][1])) and 
-                    ((landmark_list[8][1][1] < landmark_list[20][1][1]))):
+                    ((landmark_list[6][1][1] < landmark_list[12][1][1])) and 
+                    ((landmark_list[6][1][1] < landmark_list[16][1][1])) and 
+                    ((landmark_list[6][1][1] < landmark_list[20][1][1]))):
             if x_old == 0 and y_old == 0:
                 x_old, y_old = x, y
 
