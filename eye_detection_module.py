@@ -6,11 +6,17 @@ import pygame as py
 
 
 full_face_mesh = mp.solutions.face_mesh 
-face_mesh = full_face_mesh.FaceMesh(refine_landmarks = True)
+face_mesh = full_face_mesh.FaceMesh(
+    max_num_faces = 2,
+    min_detection_confidence = 0.9, 
+    min_tracking_confidence = 0.4,
+    refine_landmarks = True)
 
 
 cap = cv.VideoCapture(0)
 
+
+py.init()
 py.mixer.init()
 py.mixer.music.load('arpit_bala_audio_trimmed.mp3')
 
@@ -75,12 +81,12 @@ while True:
                 blink_counter = 0
             cv.putText(frame, "You are awake!!", (50, 50), cv.FONT_ITALIC, 2, (0, 255, 0), 4)
         if (ear_right < ear_threshold and ear_left < ear_threshold) and blink_counter > frame_threshold_for_sleep:
-            cv.putText(frame, "UHTJAAA", (10, 200), cv.FONT_ITALIC, 2, (0, 0, 255), 4)
-            print("Uthjaaaa....,  uthjaaaaa  oooooyyeeeeee")
+            cv.putText(frame, "you are sleeping", (10, 200), cv.FONT_ITALIC, 2, (0, 0, 255), 4)
+            # print("Uthjaaaa....,  uthjaaaaa  oooooyyeeeeee")
             if not py.mixer.music.get_busy(): 
-                py.mixer.music.play()
-            else:
-                py.mixer.music.stop()
+                py.mixer.music.play(-1)
+        if ear_right > ear_threshold and ear_left > ear_threshold:
+            py.mixer.music.stop()
 
 
         cv.putText(frame, f"EAR_RIGHT: {round(ear_right, 2)}", (10, 30), cv.FONT_ITALIC, 0.5, (255, 0, 0), 2)
